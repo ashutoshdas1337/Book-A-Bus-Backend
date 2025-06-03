@@ -6,7 +6,7 @@ const mongoose=require("mongoose")
 const BusSchema=new mongoose.Schema({
     BusOperator:{type:String,required:true},
 
-    BusType:{type:String,enum:["AC,NON-AC,SLEEPER"],required:true},
+    BusType:{type:String,required:true},
     
     ServiceType:{type:String,required:true},
     
