@@ -1,7 +1,7 @@
 // import mongoose so that we can use its functionalities
 const mongoose=require("mongoose")
 
-// one such functionality is schema which is like a blueprint what an entity should have , think it like that of a class in java
+// one such functionality is schema which is like a blueprint that an entity should have , think it like that of a class in java
 
 const BusSchema=new mongoose.Schema({
     BusOperator:{type:String,required:true},
