@@ -27,7 +27,15 @@ const addBus=async(req,res)=>{
  return res.status(500).json({message:"error ocuured while adding bua"})   
 }
 }
+const retrieveBusDetails=async(req,res)=>{
+    const{id}=req.params
+    if(!id) return res.status(400).json({message:"Please provide id"})
+        const findBus=await Busmodel.findById(id)
+    return res.status({message:"requested Bus data:",retrieveBusDetails})
+    
+}
 
 busRoute.post("/addBus",addBus)
+busRoute.post("/getBuses/:id",retrieveBusDetails)
 busRoute.post("/getBuses",getBuses)
 module.exports=busRoute

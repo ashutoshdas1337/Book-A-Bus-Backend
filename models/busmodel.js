@@ -12,6 +12,14 @@ const BusSchema=new mongoose.Schema({
     
     SeatCount:{type:Number,required:true},
 
+    WindowSeats:{type:Number,required:true},
+
+    MiddleSeats:{type:Number,required:true},
+
+    AisleSeats:{type:Number,required:true},
+
+    SleeperCabins:{type:Number,required:true},
+
     from:{type:String,required:true},
     
     to:{type:String,required:true},
