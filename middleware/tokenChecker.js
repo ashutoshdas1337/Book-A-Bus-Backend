@@ -1,5 +1,6 @@
 const express=require("express")
-const secret="cowsdomoo"
+require("dotenv").config()
+const secret=process.env.JWT_SECRET
 const jwt=require("jsonwebtoken")
 const tokenChecker=async(req,res,next)=>{
     const token=req.cookies.token

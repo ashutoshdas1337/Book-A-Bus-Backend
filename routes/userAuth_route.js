@@ -3,7 +3,9 @@ const router=express.Router()
 const User=require("../models/userModel")
 const jwt =require("jsonwebtoken")
 const bcrypt=require("bcrypt")
-const secret="cowsdomoo"
+require("dotenv").config()
+
+const secret=process.env.JWT_SECRET
 
 const createUser=async(req,res)=>{
     const {username,email,password,contact}=req.body
@@ -46,8 +48,12 @@ const authorizeUser=async(req,res)=>{
         return res.status(500).json({message:"error occured while logging user "})
     }
 }
-
+const logoutUser=async(req,res)=>{
+    res.clearCookie("token")
+    return res.status(200).json({message:"User logged out succesfully"})
+}
 
 router.post("/createUser",createUser)
 router.post("/login",authorizeUser)
+router.post("/logout",logoutUser)
 module.exports=router

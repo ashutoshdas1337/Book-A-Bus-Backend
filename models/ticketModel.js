@@ -25,7 +25,9 @@ const ticketModel=new mongoose.Schema({
 
     gender:{type:String,required:true},
 
-    contact:{type:String,required:true}
+    contact:{type:String,required:true},
+
+    email:{type:String,required:true}
 
 
 })

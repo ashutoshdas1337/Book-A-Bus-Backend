@@ -10,7 +10,7 @@ const getBuses=async(req,res)=>{
         const cacheKey=`buses from ${from} to ${to}`
         const findBus=await redis.get(cacheKey)
         if(findBus) return res.status(200).json({message:`buses from ${from} to ${to} (from cache)`,retrieve:JSON.parse(findBus)})
-
+            const currentTime=Date.now()
         const retrieveBuses=await Busmodel.find({from,to,SeatCount:{$gt:0}})
       await  redis.setEx(cacheKey,3600,JSON.stringify(retrieveBuses))
         return res.status(200).json({message:`retrieved buses from ${from} to ${to} (from DB)`,retrieveBuses})

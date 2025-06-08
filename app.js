@@ -5,10 +5,12 @@ const busRouter=require("./routes/bus_route")
 const redisClient=require("./redisClient")
 const cookie_parser=require("cookie-parser")
 const userAuth=require("./routes/userAuth_route")
+const cashfree=require("./cashFree")
+require("dotenv").config()
 app.use(express.json())
 app.use(cookie_parser())
 
-const MongoDBUrl="mongodb://localhost:27017/Book-a-Bus-DB"
+const MongoDBUrl=process.env.MONGODB_URL
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(MongoDBUrl, {
@@ -25,7 +27,7 @@ const connectDB = async () => {
 
 
 app.use("/user",userAuth)
-
+app.use("/payments",cashfree)
 app.use("/buses",busRouter)
 const port=8080
 connectDB().then(() => {
