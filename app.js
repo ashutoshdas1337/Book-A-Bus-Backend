@@ -4,7 +4,7 @@ const mongoose=require("mongoose")
 const busRouter=require("./routes/bus_route")
 const redisClient=require("./redisClient")
 const cookie_parser=require("cookie-parser")
-
+const userAuth=require("./routes/userAuth_route")
 app.use(express.json())
 app.use(cookie_parser())
 
@@ -24,7 +24,7 @@ const connectDB = async () => {
 };
 
 
-
+app.use("/user",userAuth)
 
 app.use("/buses",busRouter)
 const port=8080

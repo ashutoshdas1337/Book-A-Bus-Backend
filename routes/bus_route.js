@@ -2,7 +2,7 @@ const express=require("express")
 const busRoute=express.Router()
 const Busmodel=require("../models/busModel")
 const redis=require("../redisClient")
-
+const tokenChecker=require("../middleware/tokenChecker")
 const getBuses=async(req,res)=>{
     try {
         
@@ -53,6 +53,6 @@ const retrieveBusDetails=async(req,res)=>{
 }
 
 busRoute.post("/addBus",addBus)
-busRoute.post("/getBuses/:id",retrieveBusDetails)
-busRoute.post("/getBuses",getBuses)
+busRoute.post("/getBuses/:id",tokenChecker,retrieveBusDetails)
+busRoute.post("/getBuses",tokenChecker,getBuses)
 module.exports=busRoute

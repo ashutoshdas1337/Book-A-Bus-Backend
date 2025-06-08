@@ -16,14 +16,14 @@ const createUser=async(req,res)=>{
         const newUser=new User({username,email,password:hash_password,contact})
         await newUser.save()
         const token=jwt.sign({username:username,email:email,contact:contact},secret,{expiresIn:"1h"})
-        res.cookies("token",token,{
+        res.cookie("token",token,{
             httpOnly:true,
             secure:false,
             maxage:3600000
         })
         return res.status(200).json({message:"User created succesfully"})
     } catch (error) {
-        console.log("error")
+        console.log(error)
         return res.status(500).json({message:"error occured while creating user"})
     }
 }
@@ -36,7 +36,7 @@ const authorizeUser=async(req,res)=>{
     const isPasswordRight=await bcrypt.compare(password,checkEmail.password)
         if(!isPasswordRight) return res.status(401).json({message:"Wrong password"})
         const token=jwt.sign({username:checkEmail.username,email:checkEmail.email,contact:checkEmail.contact},secret,{expiresIn:"1h"})
-    res.cookies("token",token,{
+    res.cookie("token",token,{
         httpOnly:true,
         secure:false,maxage:3600000
     })
@@ -50,3 +50,4 @@ const authorizeUser=async(req,res)=>{
 
 router.post("/createUser",createUser)
 router.post("/login",authorizeUser)
+module.exports=router
