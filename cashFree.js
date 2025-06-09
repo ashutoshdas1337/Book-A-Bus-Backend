@@ -2,6 +2,8 @@ const express=require("express")
 const router=express.Router()
 const axios=require("axios")
 const crypto=require("crypto");
+const Ticket=require("./models/ticketModel")
+const redis=require("./redisClient")
 const tokenChecker = require("./middleware/tokenChecker");
 require("dotenv").config()
 
@@ -49,11 +51,30 @@ router.post("/create-payment-link", tokenChecker,async (req, res) => {
     res.status(500).json({ error: "Failed to create payment link" });
   }
 });
-router.post("/webhook/payment", express.json({ type: "*/*" }), (req, res) => {
-    const data=req.body
-    if(data.payment.payment_status==="SUCCESS")
-  console.log("📬 Webhook received:", req.body);
-  res.sendStatus(200); // Always respond 200 quickly
+router.post("/webhook/payment", express.json({ type: "*/*" }), async (req, res) => {
+    const data1=req.body
+    
+    if(data1.data.payment.payment_status==="SUCCESS"){
+    const email=data1.data.customer_details.customer_email
+      const getTicket=await Ticket.findOne({email,status:"pending"})
+      getTicket.status="CONFIRMED"
+    await getTicket.save()
+    const BusNumber=getTicket.BusNumber
+     const getBus=await Buses.findOne({BusNumber})
+    getBus.SeatCount=getBus.SeatCount-1
+    await getBus.save()
+    const ticket_cacheKey=`User ticket registered with email:${getTicket.email}`
+    const getRedis_ticket=await redis.get(ticket_cacheKey)
+    if(!getRedis_ticket){
+      await redis.setEx(cacheKey,60,JSON.stringify(getTicket))
+    }
+    const bus_cacheKey=`Bus from ${getBus.from} to ${getBus.to}`
+    await redis.setEx(bus_cacheKey,60,JSON.stringify(getBus))
+
+
+    console.log("📬 Webhook received:", req.body);
+    res.sendStatus(200); // Always respond 200 quickly
+    }
 });
 
 module.exports=router

@@ -7,6 +7,8 @@ const BusSchema=new mongoose.Schema({
     BusOperator:{type:String,required:true},
 
     BusType:{type:String,required:true},
+
+
     
     ServiceType:{type:String,required:true},
     
@@ -30,7 +32,9 @@ const BusSchema=new mongoose.Schema({
 
     departure:{type:String,required:true},
 
-    arrival:{type:String,required:true}
+    arrival:{type:String,required:true},
+
+    BusNumber:{type:String,required:true}
 })
 
 // model is say an approved schema which should be followed while making a new object, here we export it so we can use it to save new buses

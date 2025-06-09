@@ -7,6 +7,8 @@ const ticketModel=new mongoose.Schema({
 
     BusType:{type:String,required:true},
 
+    BusNumber:{type:String,required:true},
+
     BookedSeat:{type:Number,required:true},
 
     from:{type:String,required:true},
@@ -32,4 +34,4 @@ const ticketModel=new mongoose.Schema({
 
 })
 
-module.exprts=mongoose.model("Ticket",ticketModel)
+module.exports=mongoose.model("Ticket",ticketModel)

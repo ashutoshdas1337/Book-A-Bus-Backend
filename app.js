@@ -5,6 +5,7 @@ const busRouter=require("./routes/bus_route")
 const redisClient=require("./redisClient")
 const cookie_parser=require("cookie-parser")
 const userAuth=require("./routes/userAuth_route")
+const ticketGenerator=require("./generateTicket")
 const cashfree=require("./cashFree")
 require("dotenv").config()
 app.use(express.json())
@@ -25,7 +26,7 @@ const connectDB = async () => {
   }
 };
 
-
+app.use("/ticketGenerator",ticketGenerator)
 app.use("/user",userAuth)
 app.use("/payments",cashfree)
 app.use("/buses",busRouter)
