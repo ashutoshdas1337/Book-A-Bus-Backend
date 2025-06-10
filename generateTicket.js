@@ -18,7 +18,7 @@ const generateTicketDetails=async(req,res)=>{
     via,
     departure,
     arrival,
-    Name,
+    Name, 
     age,
     gender,
     email,

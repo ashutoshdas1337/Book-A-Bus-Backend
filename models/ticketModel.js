@@ -29,7 +29,9 @@ const ticketModel=new mongoose.Schema({
 
     contact:{type:String,required:true},
 
-    email:{type:String,required:true}
+    email:{type:String,required:true},
+
+    // JourneyDate:{type:String,required:true}
 
 
 })
