@@ -69,13 +69,13 @@ router.post(
       const getBus = await Buses.findOne({ BusNumber });
       getBus.SeatCount = getBus.SeatCount - 1;
       await getBus.save();
-      // const ticket_cacheKey = `User ticket registered with email:${getTicket.email}`;
-      // const getRedis_ticket = await redis.get(ticket_cacheKey);
-      // if (!getRedis_ticket) {
-      //   await redis.setEx(ticket_cacheKey, 60, JSON.stringify(getTicket));
-      // }
-      // const bus_cacheKey = `Bus from ${getBus.from} to ${getBus.to}`;
-      // await redis.setEx(bus_cacheKey, 60, JSON.stringify(getBus));
+      const ticket_cacheKey = `User ticket registered with email:${getTicket.email}`;
+      const getRedis_ticket = await redis.get(ticket_cacheKey);
+      if (!getRedis_ticket) {
+        await redis.setEx(ticket_cacheKey, 60, JSON.stringify(getTicket));
+      }
+      const bus_cacheKey = `Bus from ${getBus.from} to ${getBus.to}`;
+      await redis.setEx(bus_cacheKey, 60, JSON.stringify(getBus));
 
     }
     

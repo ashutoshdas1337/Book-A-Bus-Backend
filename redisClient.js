@@ -1,19 +1,17 @@
 const redis = require("redis");
 
-const client = redis.createClient();
-
-client.on("error", (err) => {
-  console.error("❌ Redis Client Error:", err.message);
+const client = redis.createClient({
+  url: process.env.REDIS_URL,
 });
 
-// Wrap connection in an async IIFE, and catch any error
+client.on("error", (err) => console.error("❌ Redis Client Error", err));
+
 (async () => {
   try {
     await client.connect();
     console.log("✅ Redis client connected");
-  } catch (err) {
-    console.error("⚠️ Redis connection failed:", err.message);
-    // You can either exit or continue without Redis
+  } catch (error) {
+    console.error("❌ Redis connection failed:", error);
   }
 })();
 
