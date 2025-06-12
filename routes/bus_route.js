@@ -1,6 +1,8 @@
 const express = require("express");
 const busRoute = express.Router();
+console.log("importing bus model")
 const Busmodel = require("../models/busModel");
+console.log("bus model file imported")
 const redis = require("../redisClient");
 const tokenChecker = require("../middleware/tokenChecker");
 
