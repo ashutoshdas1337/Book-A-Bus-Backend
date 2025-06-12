@@ -28,11 +28,11 @@ const connectDB = async () => {
     
   }
 };
+app.use("/user",userAuth)
+app.use("/buses",busRouter)
 app.use("/userTickets",seeTicket)
 app.use("/ticketGenerator",ticketGenerator)
-app.use("/user",userAuth)
 app.use("/payments",cashfree)
-app.use("/buses",busRouter)
 const port=8080
 connectDB().then(() => {
   app.listen(port, () => {
