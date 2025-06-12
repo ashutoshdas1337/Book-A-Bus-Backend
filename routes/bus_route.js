@@ -121,6 +121,6 @@ const retrieveBusDetails = async (req, res) => {
 };
 
 busRoute.post("/addBus", addBus);
-busRoute.post("/getBuses/getBusDetails", tokenChecker, retrieveBusDetails);
-busRoute.post("/getBuses", tokenChecker, getBuses);
+busRoute.post("/getBuses/getBusDetails", retrieveBusDetails);
+busRoute.post("/getBuses", getBuses);
 module.exports = busRoute;
