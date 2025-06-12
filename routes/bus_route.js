@@ -10,22 +10,22 @@ const tokenChecker = require("../middleware/tokenChecker");
 const getBuses = async (req, res) => {
   try {
     const { from, to } = req.body;
-    const cacheKey = `buses from ${from} to ${to}`;
-    const findBus = await redis.get(cacheKey);
-    if (findBus)
-      return res
-        .status(200)
-        .json({
-          message: `buses from ${from} to ${to} (from cache)`,
-          retrieve: JSON.parse(findBus),
-        });
+    // const cacheKey = `buses from ${from} to ${to}`;
+    // const findBus = await redis.get(cacheKey);
+    // if (findBus)
+    //   return res
+    //     .status(200)
+    //     .json({
+    //       message: `buses from ${from} to ${to} (from cache)`,
+    //       retrieve: JSON.parse(findBus),
+    //     });
     const currentTime = Date.now();
     const retrieveBuses = await Busmodel.find({
       from,
       to,
       SeatCount: { $gt: 0 },
     });
-    await redis.setEx(cacheKey, 60, JSON.stringify(retrieveBuses));
+    // await redis.setEx(cacheKey, 60, JSON.stringify(retrieveBuses));
     return res
       .status(200)
       .json({
@@ -96,15 +96,15 @@ const retrieveBusDetails = async (req, res) => {
   const {BusNumber} = req.body;
   if (!BusNumber) return res.status(400).json({ message: "Please provide id" });
   try {
-    const cacheKey = `busNumber:${BusNumber}`;
-    const getBus = await redis.get(cacheKey);
-    if (getBus)
-      return res
-        .status(200)
-        .json({
-          message: "Retrived bus from cache(redis)",
-          busDetails: JSON.parse(getBus),
-        });
+    // const cacheKey = `busNumber:${BusNumber}`;
+    // const getBus = await redis.get(cacheKey);
+    // if (getBus)
+    //   return res
+    //     .status(200)
+    //     .json({
+    //       message: "Retrived bus from cache(redis)",
+    //       busDetails: JSON.parse(getBus),
+    //     });
     const findBus = await Busmodel.findOne({BusNumber});
     if (!findBus)
       return res.status(404).json({ message: "bus does not exists" });
