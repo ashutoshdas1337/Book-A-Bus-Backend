@@ -11,7 +11,7 @@ require("dotenv").config();
 const APP_ID = process.env.CASHFREE_API_ID;
 const SECRET_KEY = process.env.CASHFREE_API_SECRET;
 
-router.post("/create-payment-link",  async (req, res) => {
+router.post("/create-payment-link",tokenChecker,  async (req, res) => {
   try {
     const { customerName, customerEmail, customerPhone, amount } = req.body;
 

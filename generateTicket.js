@@ -2,6 +2,7 @@ const express=require("express")
 const router=express.Router()
 const ticket=require("./models/ticketModel")
 const redis=require("./redisClient")
+const tokenChecker = require("./middleware/tokenChecker")
 
 const generateTicketDetails=async(req,res)=>{
     const {status,BusOperator,BusType,BusNumber,BookedSeat,from,to,via,departure,arrival,Name,age,contact,gender,email}=req.body
@@ -35,5 +36,5 @@ const generateTicketDetails=async(req,res)=>{
     return res.status(500).json({message:"error ocuured while generating ticket"})
 } 
 }
-router.post("/generateTicket",generateTicketDetails)
+router.post("/generateTicket",tokenChecker,generateTicketDetails)
 module.exports=router
